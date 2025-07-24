@@ -1,0 +1,35 @@
+name: Historia Academica ETL
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo 📚
+      uses: actions/checkout@v3
+
+    - name: Setup Python 🐍
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies 📦
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run Historia Academica ETL ✅
+      run: |
+        python -m app.main --historiaacademica
+
+    - name: Run Datos Basicos ETL ✅
+      run: |
+        python -m app.main --datosbasicos
+
+    # Nota: Para subir a OneDrive, deberás añadir pasos
+    # con rclone o usar Microsoft Graph API + secrets
